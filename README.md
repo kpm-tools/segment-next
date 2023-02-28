@@ -1,38 +1,175 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Segment-Next.js
 
-## Getting Started
+After integrating Next.js applications with [Segment](https://segment.com) I've ran into a few pitfalls that their library doesn't provide. Here's a few things that this library can do for you out of the box.
 
-First, run the development server:
+-   Guaranteed `analytics.page` event fire on initial page load, regardless of it being client-side or server-side.
+-   A `handlePageEvent` callback to tie your application to be able to run a consistent `analytics.page` event for better downstream reporting.
+-   A fully typed API to pull use so that you know you're passing in the right parameters to your events.
+-   An event helper, `analyticsEvent`, that guarantees delivery of an event client-side and server-side.
+-   The `useWaitForSegmentScript` hook that you can tie into so your application is aware of when the Segment script is ready in your application.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## Usage
+
+In your `_app.js` file, add in the `SegmentScript` component:
+
+```
+    import { SegmentScrip, analyticsEvent } from 'segment-next.js'
+    const App = () => {
+
+        const callbackFunction = (pathname: string) => {
+            // Optionally can add any variables here
+            analyticsEvent.page()
+        }
+
+        return (
+            <>
+                <Component {...pageProps}>
+                <SegmentScript
+                    apiKey={YOUR_API_KEY} // Required
+                    handlePageEvent={callbackFunction} // Used to let your app know of initial server-side load and other route changes
+                />
+            </>
+        )
+    }
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+With the `analyticsEvent` helper you can confidently call any of segment's methods in your app, here's an example:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+    <button onClick={() => analyticsEvent.track('Button Click', { user: 'Dwayne Johnson'})}>
+        Click Me!
+    </button>
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Documentation
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### SegmentScript
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+    <SegmentScript
+        apiKey={YOUR_API_KEY} // Required - string
+        handlePageEvent={callbackFunction} // Optional (but recommended) - Function - returns "pathname" value
+        host={URL_FOR_YOUR_HOST} // Optional - string - Domain for where your analytics.js script is hosted
+        scriptPath={PATH_FOR_YOUR_SCRIPT} // Optional - string  - To override the default analytics.js locaiton
 
-## Learn More
+    />
+```
 
-To learn more about Next.js, take a look at the following resources:
+### analyticsEvent
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+These map directly to the analytics events in [Segment's Docs](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/). All of these functions are all fully typed as well. All events return a success or failed boolean and the type of event that was fired.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+analyticsEvent.track(
+    event: Event = null,
+    properties: Properties = {},
+    options: Options = {},
+    callback: Callback = null
+)
+```
 
-## Deploy on Vercel
+```
+analyticsEvent.identify(
+    userId?: UserId,
+    traits?: Traits,
+    options: Options = {},
+    callback: Callback = null)
+)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+analyticsEvent.page(
+    category?: Category,
+    name?: Name,
+    properties: Properties = {},
+    options: Options = {},
+    callback: Callback = null
+)
+```
+
+```
+analyticsEvent.group(
+    groupId: GroupId,
+    traits?: Traits,
+    options?: Options,
+    callback?: Callback
+)
+```
+
+```
+analyticsEvent.alias(
+    userId: UserId,
+    previousId?: PreviousId,
+    options: Options = {},
+    callback: Callback = null
+)
+```
+
+### Types
+
+Here are the types that are used for the values you can pass into `analyticsEvent`
+
+```
+export type UserId = string | null;
+export type Category = string | null;
+export type Name = string | null;
+export type Options = object | null;
+export type Callback = Function | null;
+export type Event = string | null;
+export type GroupId = string | null;
+export type PreviousId = string | null;
+
+export enum EventType {
+    Track = 'track',
+    Identify = 'identify',
+    Page = 'page',
+    Group = 'group',
+    Alias = 'alias',
+}
+
+export interface Traits {
+    address?: {
+        city?: string;
+        country?: string;
+        postalCode?: number;
+        state?: string;
+        street?: string;
+    };
+    age?: number;
+    avatar?: string;
+    birthday?: Date;
+    company?: {
+        name?: string;
+        id: string | number;
+        industry?: string;
+        employee_count?: number;
+        plan?: string;
+    };
+    createdAt?: Date;
+    description?: string;
+    email?: string;
+    firstName?: string;
+    gender?: string;
+    id?: string;
+    lastName?: string;
+    name?: string;
+    phone?: string;
+    title?: string;
+    username?: string;
+    website?: string;
+}
+
+export interface Properties {
+    name?: string;
+    path?: string;
+    referrer?: string;
+    search?: string;
+    title?: string;
+    url?: string;
+    keywords?: string[];
+    [property: string]: any;
+}
+
+
+```
