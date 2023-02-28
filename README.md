@@ -10,6 +10,12 @@ After integrating Next.js applications with [Segment](https://segment.com) I've 
 
 ## Usage
 
+Install to your application:
+
+```
+    npm i segment-next.js
+```
+
 In your `_app.js` file, add in the `SegmentScript` component:
 
 ```

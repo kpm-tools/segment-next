@@ -18,5 +18,18 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.5"
-  }
+  },
+  "description": "After integrating Next.js applications with [Segment](https://segment.com) I've ran into a few pitfalls that their library doesn't provide. Here's a few things that this library can do for you out of the box.",
+  "main": "index.ts",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylemcd/segment-next.js.git"
+  },
+  "author": "Kyle McDonald",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kylemcd/segment-next.js/issues"
+  },
+  "homepage": "https://github.com/kylemcd/segment-next.js#readme"
 }
