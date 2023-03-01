@@ -8,3 +8,4 @@ tsconfig.tsbuildinfo
 .prettierrc
 .eslintrc.json
 next.congi.js
+/packages
