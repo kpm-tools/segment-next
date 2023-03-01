@@ -59,7 +59,6 @@ const handleAsyncEvent = async (event: Function, type: EventType): Promise<Handl
     if (event) {
         const { segmentScriptStatus } = await segmentScriptObserver();
         if (segmentScriptStatus === STATUS.LOADED) {
-            console.log(typeof event, event);
             event();
             return { success: true, type };
         }

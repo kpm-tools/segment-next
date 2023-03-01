@@ -1,6 +1,7 @@
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import Script from 'next/script';
+
+import usePathname from '../../hooks/usePathname';
 
 type Pathname = string;
 
@@ -20,25 +21,13 @@ const SegmentScript: React.FC<SegmentScriptProps> = (props: SegmentScriptProps):
         scriptPath: scriptPath || `/analytics.js/v1/${apiKey}/analytics.min.js`,
     };
 
-    const router = useRouter();
+    const { pathname } = usePathname();
 
-    // Initial Page Load
-    React.useEffect(() => {
-        if (handlePageEvent) {
-            handlePageEvent(router.pathname);
+    useEffect(() => {
+        if (pathname && handlePageEvent) {
+            handlePageEvent(pathname);
         }
-    }, [handlePageEvent]);
-
-    // Any Page Load After
-    React.useEffect(() => {
-        if (handlePageEvent) {
-            router.events.on('routeChangeComplete', handlePageEvent);
-
-            return () => {
-                router.events.off('routeChangeComplete', handlePageEvent);
-            };
-        }
-    }, [router, handlePageEvent]);
+    }, [pathname, handlePageEvent]);
 
     return (
         <Script

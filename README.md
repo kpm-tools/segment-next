@@ -2,6 +2,7 @@
 
 After integrating Next.js applications with [Segment](https://segment.com) I've ran into a few pitfalls that their library doesn't provide. Here's a few things that this library can do for you out of the box.
 
+-   Compatible with older verisons of Next.js and Next.js v13 app directory
 -   Guaranteed `analytics.page` event fire on initial page load, regardless of it being client-side or server-side.
 -   A `handlePageEvent` callback to tie your application to be able to run a consistent `analytics.page` event for better downstream reporting.
 -   A fully typed API to pull use so that you know you're passing in the right parameters to your events.
@@ -19,7 +20,7 @@ npm i segment-next.js
 In your `_app.js` file, add in the `SegmentScript` component:
 
 ```js
-import { SegmentScrip, analyticsEvent } from 'segment-next.js'
+import { SegmentScript, analyticsEvent } from 'segment-next.js'
 const App = () => {
 
     const callbackFunction = (pathname: string) => {
@@ -43,6 +44,48 @@ With the `analyticsEvent` helper you can confidently call any of segment's metho
 
 ```js
 <button onClick={() => analyticsEvent.track('Button Click', { user: 'Dwayne Johnson' })}>Click Me!</button>
+```
+
+### Next 13 App Directory Integration
+
+Because Next 13 only allows functions to be initiated in "client-components" and not "server-components", you will need to wrap the `SegmentScript` component in a wrapper before including it in the `app` directory. Here's an example:
+
+```js
+'use client';
+import { SegmentScript, analyticsEvent } from 'segment-next.js';
+
+const SegmentWrapper = () => {
+    const handlePageEvent = (pathname: string) => {
+        analyticsEvent.page(pathname);
+    };
+
+    return (
+        <>
+            <SegmentScript apiKey={YOUR_API_KEY} handlePageEvent={handlePageEvent} />
+        </>
+    );
+};
+
+export default SegmentWrapper;
+```
+
+You can then call this wrapper in your "server-components" without the need to designate parent components with "use client", here's an example in the app's main layout file:
+
+```js
+import SegmentWrapper from '@/helpers/SegmentWrapper';
+
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <html lang="en">
+            <body>
+                {children}
+                <SegmentWrapper />
+            </body>
+        </html>
+    );
+};
+
+export default RootLayout;
 ```
 
 ## Documentation
