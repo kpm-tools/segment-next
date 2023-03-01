@@ -1,5 +1,5 @@
 // Core
-export * from './components/SegmentScript';
+export { default as SegmentScript } from './components/SegmentScript/SegmentScript';
 export { analyticsEvent } from './helpers/analyticsEvent';
 
 // Helpers

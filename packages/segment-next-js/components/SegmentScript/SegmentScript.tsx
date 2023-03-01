@@ -11,7 +11,7 @@ interface SegmentScriptProps {
     handlePageEvent?: (pathname: Pathname) => void;
 }
 
-const SegmentScript = (props: SegmentScriptProps) => {
+const SegmentScript: React.FC<SegmentScriptProps> = (props: SegmentScriptProps): React.ReactElement => {
     const { apiKey, host, scriptPath, handlePageEvent } = props;
 
     const options = {
