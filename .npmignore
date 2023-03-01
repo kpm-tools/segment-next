@@ -3,7 +3,7 @@
 .next
 .rollup.cache
 .env
-.tsconifg.tsbuildinfo
+tsconfig.tsbuildinfo
 .next-env.d.ts
 .prettierrc
 .eslintrc.json
