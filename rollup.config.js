@@ -20,9 +20,9 @@ export default [
     bundle({
         acornInjectPlugins: [jsx()],
         plugins: [
-            commonjs({
-                include: 'node_modules/**',
-            }),
+            // commonjs({
+            //     include: 'node_modules/**',
+            // }),
             babel({
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
                 presets: ['@babel/preset-react'],
