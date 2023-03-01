@@ -18,7 +18,7 @@ npm i segment-next.js
 
 In your `_app.js` file, add in the `SegmentScript` component:
 
-```
+```js
 import { SegmentScrip, analyticsEvent } from 'segment-next.js'
 const App = () => {
 
@@ -41,23 +41,20 @@ const App = () => {
 
 With the `analyticsEvent` helper you can confidently call any of segment's methods in your app, here's an example:
 
-```
-    <button onClick={() => analyticsEvent.track('Button Click', { user: 'Dwayne Johnson'})}>
-        Click Me!
-    </button>
+```js
+<button onClick={() => analyticsEvent.track('Button Click', { user: 'Dwayne Johnson' })}>Click Me!</button>
 ```
 
 ## Documentation
 
 ### SegmentScript
 
-```
+```js
 <SegmentScript
     apiKey={YOUR_API_KEY} // Required - string
     handlePageEvent={callbackFunction} // Optional (but recommended) - Function - returns "pathname" value
     host={URL_FOR_YOUR_HOST} // Optional - string - Domain for where your analytics.js script is hosted
     scriptPath={PATH_FOR_YOUR_SCRIPT} // Optional - string  - To override the default analytics.js locaiton
-
 />
 ```
 
