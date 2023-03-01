@@ -2,3 +2,9 @@
 /node_modules
 .next
 .rollup.cache
+.env
+.tsconifg.tsbuildinfo
+.next-env.d.ts
+.prettierrc
+.eslintrc.json
+next.congi.js
