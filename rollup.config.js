@@ -1,5 +1,4 @@
 import esbuild from 'rollup-plugin-esbuild';
-import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import jsx from 'acorn-jsx';
@@ -20,9 +19,6 @@ export default [
     bundle({
         acornInjectPlugins: [jsx()],
         plugins: [
-            // commonjs({
-            //     include: 'node_modules/**',
-            // }),
             babel({
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
                 presets: ['@babel/preset-react'],
