@@ -1,4 +1,3 @@
-import dts from 'rollup-plugin-dts';
 import esbuild from 'rollup-plugin-esbuild';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -30,7 +29,6 @@ export default [
                 babelHelpers: 'bundled',
             }),
             nodeResolve({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }),
-
             typescript(),
             esbuild(),
         ],
@@ -46,12 +44,5 @@ export default [
                 sourcemap: true,
             },
         ],
-    }),
-    bundle({
-        plugins: [dts()],
-        output: {
-            file: `./dist/${name}.d.ts`,
-            format: 'es205',
-        },
     }),
 ];
