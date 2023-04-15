@@ -9,3 +9,6 @@ tsconfig.tsbuildinfo
 .eslintrc.json
 next.congi.js
 /packages
+tsconfig.json
+/examples
+.github
