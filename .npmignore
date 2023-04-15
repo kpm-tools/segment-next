@@ -12,3 +12,5 @@ next.congi.js
 tsconfig.json
 /examples
 .github
+next.config.cjs
+rollup.config.js
