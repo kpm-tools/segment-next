@@ -119,7 +119,7 @@ analyticsEvent.identify(
     userId?: UserId,
     traits?: Traits,
     options: Options = {},
-    callback: Callback = null)
+    callback: Callback = null
 )
 
 ```
