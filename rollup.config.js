@@ -5,9 +5,6 @@ import typescript from '@rollup/plugin-typescript';
 import jsx from 'acorn-jsx';
 import babel from '@rollup/plugin-babel';
 
-// import packageJson from './package.json' assert { type: 'json' };
-
-// const name = packageJson.main.replace(/\.js$/, '');
 const name = 'index';
 
 const bundle = (config) => ({
