@@ -14,13 +14,13 @@ After integrating Next.js applications with [Segment](https://segment.com) I've 
 Install to your application:
 
 ```
-npm i segment-next.js
+npm i @kpm-tools/segment-next
 ```
 
 In your `_app.js` file, add in the `SegmentScript` component:
 
 ```js
-import { SegmentScript, analyticsEvent } from 'segment-next.js'
+import { SegmentScript, analyticsEvent } from '@kpm-tools/segment-next'
 const App = () => {
 
     const callbackFunction = (pathname: string) => {
@@ -52,7 +52,7 @@ Because Next 13 only allows functions to be initiated in "client-components" and
 
 ```js
 'use client';
-import { SegmentScript, analyticsEvent } from 'segment-next.js';
+import { SegmentScript, analyticsEvent } from '@kpm-tools/segment-next';
 
 const SegmentWrapper = () => {
     const handlePageEvent = (pathname: string) => {
@@ -107,10 +107,10 @@ These map directly to the analytics events in [Segment's Docs](https://segment.c
 
 ```js
 analyticsEvent.track(
-    ((event: Event) = null),
-    ((properties: Properties) = {}),
-    ((options: Options) = {}),
-    ((callback: Callback) = null)
+    event: Event,
+    properties: Properties = {},
+    options: Options = {},
+    callback: Callback = null
 );
 ```
 
